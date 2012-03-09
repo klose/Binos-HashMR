@@ -1,0 +1,8 @@
+Binos-HashMR is a new mapreduce programming framework.It includes these features:
+1)process all data in memory.
+2)launch a task in one thread.
+3)shared objects in multi-threads.
+4)using ZeroMq to copy memory from another node.
+5)using hashtable instead of map-sort,merge-sort.
+
+If you are interested with these features, or have questions, please mailto jiangbinglover@gmail.com

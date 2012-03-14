@@ -20,6 +20,7 @@ import cn.ict.binos.transmit.BinosURL;
 import com.klose.hash.mapreduce.DataSplit;
 import com.klose.hash.mapreduce.FileSplitIndex;
 import com.klose.hash.mapreduce.MRConfig;
+import com.klose.hash.mapreduce.MRConfigDefine;
 import com.transformer.compiler.JobProperties;
 import com.transformer.compiler.Operation;
 
@@ -43,13 +44,13 @@ public class SplitOperation implements Operation{
 			LOG.error("the number of input path : " + inputPath.length);
 			return;
 		}
-		if (Integer.parseInt(properties.getProperty("map.task.num")) != outputPath.length) {
+		if (Integer.parseInt(properties.getProperty(MRConfigDefine.MAPPER_NUM)) != outputPath.length) {
 			LOG.error("the numer of output path:" + outputPath.length + " doesnot equal to map task num!");
 			return;
 		}
 		try {
 			MRConfig conf = new MRConfig("split");
-			conf.setSplitFileSize(Integer.parseInt(properties.getProperty("mapper.file.spilt.size")));
+			conf.setSplitFileSize(Integer.parseInt(properties.getProperty(MRConfigDefine.MAPPER_FILE_SPLIT_SIZE)));
 			final DataSplit split = new DataSplit(new Path(inputPath[0]));
 			List<FileSplitIndex> list = split.getSplits(conf);
 			if (list.size() != outputPath.length) {

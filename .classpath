@@ -8,6 +8,6 @@
 	<classpathentry kind="lib" path="/home/jiangbing/eclipse_java/java_workspace/Master-Slave/lib/commons-logging-api-1.1.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Binos"/>
 	<classpathentry kind="lib" path="/home/jiangbing/JLoop/protobuf-java-2.3.0.jar" sourcepath="/home/jiangbing/JLoop/protobuf-2.3.0/java/src"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/DataBus"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DataBusF"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

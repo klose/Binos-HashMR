@@ -45,7 +45,7 @@ public class WordCountTest {
 
 	public static void main(String[] args) throws Exception {
 		MRConfig conf = new MRConfig("wordcount");
-		//conf.setSplitFileSize(16*1024*1024);
+		conf.setSplitFileSize(1024*1024*64);
 		String inputFileName[] = {"input"};
 		String outputFileName[] = {"output1","output2","output3","output4"};
 		//String outputFileName[] = {"output1"};

@@ -20,8 +20,8 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 
 import com.google.protobuf.ByteString;
+import com.klose.hash.mapreduce.KeyValue.KVPair;
 import com.klose.hash.mapreduce.TaskIO;
-import com.klose.hash.mapreduce.KeyValue.KVList;
 import com.longyi.databus.clientapi.TaskInput;
 import com.longyi.databus.daemon.PartionUpdateThread;
 import com.longyi.databus.define.DATABUS;
@@ -32,7 +32,7 @@ import com.transformer.compiler.TransmitType;
 import cn.ict.binos.transmit.MessageClientChannel;
 
 public class ReduceContext <KEYIN, VALUEIN, KEYOUT, VALUEOUT>{
-
+	public static long timeUsed = 0;
 
 	private final static Log LOG = LogFactory.getLog(ReduceContext.class);
 	private final static DataState state = DataState.SHARE_MEMORY;
@@ -70,7 +70,10 @@ public class ReduceContext <KEYIN, VALUEIN, KEYOUT, VALUEOUT>{
 	}
 	
 	public boolean nextKey()  {
+		long start = System.currentTimeMillis();
 		this.currentKey = fetchDataThread.getPrepareKey();
+		//LOG.info("fetch " + this.currentKey + " use " + (System.currentTimeMillis() - start) + "ms");
+		timeUsed += (System.currentTimeMillis() - start);
 		if (this.currentKey != null) {
 			return true;
 		}
@@ -82,35 +85,44 @@ public class ReduceContext <KEYIN, VALUEIN, KEYOUT, VALUEOUT>{
 	public String getCurrentKey() {
 		return this.currentKey;
 	}
-	
-	 public Iterable<Object> getValues() {
-		 ByteArrayInputStream bais ;
-		 ObjectInputStream ois;
+	 public Iterable getValues() {
 		 Iterable <byte[]> iter =  taskInput.getkeyByte(String.valueOf(this.partitionId), this.currentKey);
-		 List<Object> values = new ArrayList<Object>();
+		 List<Integer> values = new ArrayList<Integer>();
 		 for (byte[] tmp : iter) {
-			 try {
-				 bais = new ByteArrayInputStream(tmp);
-				 ois = new ObjectInputStream(bais);
-				 values.add(ois.readObject());
-				 ois.close();
-				 bais.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			values.add((Integer)Integer.valueOf((new String(tmp))));	
 		 }
 		 return values;
 	 }
+//	 public Iterable getValues() {
+//		 ByteArrayInputStream bais ;
+//		 ObjectInputStream ois;
+//		 Iterable <byte[]> iter =  taskInput.getkeyByte(String.valueOf(this.partitionId), this.currentKey);
+//		 List<Integer> values = new ArrayList<Integer>();
+//		 for (byte[] tmp : iter) {
+//			 try {
+//				 bais = new ByteArrayInputStream(tmp);
+//				 ois = new ObjectInputStream(bais);
+//				 try {
+//					values.add((Integer) ois.readObject());
+//				} catch (ClassNotFoundException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				 ois.close();
+//				 bais.close();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} 
+//		 }
+//		 return values;
+//	 }
 	 
 	public void output(String key, Object value) {
 //		outPut.receive(key, value);
-		KVList.Builder builder = KVList.newBuilder();
+		KVPair.Builder builder = KVPair.newBuilder();
 		builder.setKey(key);
-		builder.addVlist((ByteString) value);
+		builder.setValue(value.toString());
 		try {
 			builder.build().writeDelimitedTo(out);
 		} catch (IOException e) {
@@ -120,6 +132,7 @@ public class ReduceContext <KEYIN, VALUEIN, KEYOUT, VALUEOUT>{
 	}
 	public void flush() {
 		try {
+			fetchDataThread.destroyPartionUpdate();
 			out.flush();
 			out.close();
 		} catch (IOException e) {

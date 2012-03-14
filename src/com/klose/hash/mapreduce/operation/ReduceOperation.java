@@ -23,7 +23,7 @@ public class ReduceOperation implements Operation{
 		String jobId = properties.getProperty("jobID");
 		LOG.info("JobID:" + jobId);
 		LOG.info("taskID:" + taskId);
-		int partitionId = Integer.parseInt(taskId.substring(taskId.lastIndexOf('_')));
+		int partitionId = Integer.parseInt(taskId.substring(taskId.lastIndexOf('_') + 1));
 		
 		ReduceContext context;
 		try {

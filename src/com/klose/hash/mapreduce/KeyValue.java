@@ -8,31 +8,31 @@ public final class KeyValue {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public static final class KVList extends
+  public static final class KVPair extends
       com.google.protobuf.GeneratedMessage {
-    // Use KVList.newBuilder() to construct.
-    private KVList() {
+    // Use KVPair.newBuilder() to construct.
+    private KVPair() {
       initFields();
     }
-    private KVList(boolean noInit) {}
+    private KVPair(boolean noInit) {}
     
-    private static final KVList defaultInstance;
-    public static KVList getDefaultInstance() {
+    private static final KVPair defaultInstance;
+    public static KVPair getDefaultInstance() {
       return defaultInstance;
     }
     
-    public KVList getDefaultInstanceForType() {
+    public KVPair getDefaultInstanceForType() {
       return defaultInstance;
     }
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.klose.hash.mapreduce.KeyValue.internal_static_cn_ict_cacuts_mapreduce_KVList_descriptor;
+      return com.klose.hash.mapreduce.KeyValue.internal_static_cn_ict_cacuts_mapreduce_KVPair_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.klose.hash.mapreduce.KeyValue.internal_static_cn_ict_cacuts_mapreduce_KVList_fieldAccessorTable;
+      return com.klose.hash.mapreduce.KeyValue.internal_static_cn_ict_cacuts_mapreduce_KVPair_fieldAccessorTable;
     }
     
     // required string key = 1;
@@ -42,22 +42,18 @@ public final class KeyValue {
     public boolean hasKey() { return hasKey; }
     public java.lang.String getKey() { return key_; }
     
-    // repeated bytes vlist = 2;
-    public static final int VLIST_FIELD_NUMBER = 2;
-    private java.util.List<com.google.protobuf.ByteString> vlist_ =
-      java.util.Collections.emptyList();
-    public java.util.List<com.google.protobuf.ByteString> getVlistList() {
-      return vlist_;
-    }
-    public int getVlistCount() { return vlist_.size(); }
-    public com.google.protobuf.ByteString getVlist(int index) {
-      return vlist_.get(index);
-    }
+    // required string value = 2;
+    public static final int VALUE_FIELD_NUMBER = 2;
+    private boolean hasValue;
+    private java.lang.String value_ = "";
+    public boolean hasValue() { return hasValue; }
+    public java.lang.String getValue() { return value_; }
     
     private void initFields() {
     }
     public final boolean isInitialized() {
       if (!hasKey) return false;
+      if (!hasValue) return false;
       return true;
     }
     
@@ -67,8 +63,8 @@ public final class KeyValue {
       if (hasKey()) {
         output.writeString(1, getKey());
       }
-      for (com.google.protobuf.ByteString element : getVlistList()) {
-        output.writeBytes(2, element);
+      if (hasValue()) {
+        output.writeString(2, getValue());
       }
       getUnknownFields().writeTo(output);
     }
@@ -83,55 +79,50 @@ public final class KeyValue {
         size += com.google.protobuf.CodedOutputStream
           .computeStringSize(1, getKey());
       }
-      {
-        int dataSize = 0;
-        for (com.google.protobuf.ByteString element : getVlistList()) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeBytesSizeNoTag(element);
-        }
-        size += dataSize;
-        size += 1 * getVlistList().size();
+      if (hasValue()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(2, getValue());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
     }
     
-    public static com.klose.hash.mapreduce.KeyValue.KVList parseFrom(
+    public static com.klose.hash.mapreduce.KeyValue.KVPair parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.klose.hash.mapreduce.KeyValue.KVList parseFrom(
+    public static com.klose.hash.mapreduce.KeyValue.KVPair parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.klose.hash.mapreduce.KeyValue.KVList parseFrom(byte[] data)
+    public static com.klose.hash.mapreduce.KeyValue.KVPair parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.klose.hash.mapreduce.KeyValue.KVList parseFrom(
+    public static com.klose.hash.mapreduce.KeyValue.KVPair parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.klose.hash.mapreduce.KeyValue.KVList parseFrom(java.io.InputStream input)
+    public static com.klose.hash.mapreduce.KeyValue.KVPair parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.klose.hash.mapreduce.KeyValue.KVList parseFrom(
+    public static com.klose.hash.mapreduce.KeyValue.KVPair parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static com.klose.hash.mapreduce.KeyValue.KVList parseDelimitedFrom(java.io.InputStream input)
+    public static com.klose.hash.mapreduce.KeyValue.KVPair parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       Builder builder = newBuilder();
       if (builder.mergeDelimitedFrom(input)) {
@@ -140,7 +131,7 @@ public final class KeyValue {
         return null;
       }
     }
-    public static com.klose.hash.mapreduce.KeyValue.KVList parseDelimitedFrom(
+    public static com.klose.hash.mapreduce.KeyValue.KVPair parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -151,12 +142,12 @@ public final class KeyValue {
         return null;
       }
     }
-    public static com.klose.hash.mapreduce.KeyValue.KVList parseFrom(
+    public static com.klose.hash.mapreduce.KeyValue.KVPair parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.klose.hash.mapreduce.KeyValue.KVList parseFrom(
+    public static com.klose.hash.mapreduce.KeyValue.KVPair parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -166,25 +157,25 @@ public final class KeyValue {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.klose.hash.mapreduce.KeyValue.KVList prototype) {
+    public static Builder newBuilder(com.klose.hash.mapreduce.KeyValue.KVPair prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private com.klose.hash.mapreduce.KeyValue.KVList result;
+      private com.klose.hash.mapreduce.KeyValue.KVPair result;
       
-      // Construct using com.klose.hash.mapreduce.KeyValue.KVList.newBuilder()
+      // Construct using com.klose.hash.mapreduce.KeyValue.KVPair.newBuilder()
       private Builder() {}
       
       private static Builder create() {
         Builder builder = new Builder();
-        builder.result = new com.klose.hash.mapreduce.KeyValue.KVList();
+        builder.result = new com.klose.hash.mapreduce.KeyValue.KVPair();
         return builder;
       }
       
-      protected com.klose.hash.mapreduce.KeyValue.KVList internalGetResult() {
+      protected com.klose.hash.mapreduce.KeyValue.KVPair internalGetResult() {
         return result;
       }
       
@@ -193,7 +184,7 @@ public final class KeyValue {
           throw new IllegalStateException(
             "Cannot call clear() after build().");
         }
-        result = new com.klose.hash.mapreduce.KeyValue.KVList();
+        result = new com.klose.hash.mapreduce.KeyValue.KVPair();
         return this;
       }
       
@@ -203,24 +194,24 @@ public final class KeyValue {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.klose.hash.mapreduce.KeyValue.KVList.getDescriptor();
+        return com.klose.hash.mapreduce.KeyValue.KVPair.getDescriptor();
       }
       
-      public com.klose.hash.mapreduce.KeyValue.KVList getDefaultInstanceForType() {
-        return com.klose.hash.mapreduce.KeyValue.KVList.getDefaultInstance();
+      public com.klose.hash.mapreduce.KeyValue.KVPair getDefaultInstanceForType() {
+        return com.klose.hash.mapreduce.KeyValue.KVPair.getDefaultInstance();
       }
       
       public boolean isInitialized() {
         return result.isInitialized();
       }
-      public com.klose.hash.mapreduce.KeyValue.KVList build() {
+      public com.klose.hash.mapreduce.KeyValue.KVPair build() {
         if (result != null && !isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return buildPartial();
       }
       
-      private com.klose.hash.mapreduce.KeyValue.KVList buildParsed()
+      private com.klose.hash.mapreduce.KeyValue.KVPair buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
         if (!isInitialized()) {
           throw newUninitializedMessageException(
@@ -229,39 +220,32 @@ public final class KeyValue {
         return buildPartial();
       }
       
-      public com.klose.hash.mapreduce.KeyValue.KVList buildPartial() {
+      public com.klose.hash.mapreduce.KeyValue.KVPair buildPartial() {
         if (result == null) {
           throw new IllegalStateException(
             "build() has already been called on this Builder.");
         }
-        if (result.vlist_ != java.util.Collections.EMPTY_LIST) {
-          result.vlist_ =
-            java.util.Collections.unmodifiableList(result.vlist_);
-        }
-        com.klose.hash.mapreduce.KeyValue.KVList returnMe = result;
+        com.klose.hash.mapreduce.KeyValue.KVPair returnMe = result;
         result = null;
         return returnMe;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.klose.hash.mapreduce.KeyValue.KVList) {
-          return mergeFrom((com.klose.hash.mapreduce.KeyValue.KVList)other);
+        if (other instanceof com.klose.hash.mapreduce.KeyValue.KVPair) {
+          return mergeFrom((com.klose.hash.mapreduce.KeyValue.KVPair)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(com.klose.hash.mapreduce.KeyValue.KVList other) {
-        if (other == com.klose.hash.mapreduce.KeyValue.KVList.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.klose.hash.mapreduce.KeyValue.KVPair other) {
+        if (other == com.klose.hash.mapreduce.KeyValue.KVPair.getDefaultInstance()) return this;
         if (other.hasKey()) {
           setKey(other.getKey());
         }
-        if (!other.vlist_.isEmpty()) {
-          if (result.vlist_.isEmpty()) {
-            result.vlist_ = new java.util.ArrayList<com.google.protobuf.ByteString>();
-          }
-          result.vlist_.addAll(other.vlist_);
+        if (other.hasValue()) {
+          setValue(other.getValue());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -293,7 +277,7 @@ public final class KeyValue {
               break;
             }
             case 18: {
-              addVlist(input.readBytes());
+              setValue(input.readString());
               break;
             }
           }
@@ -322,63 +306,44 @@ public final class KeyValue {
         return this;
       }
       
-      // repeated bytes vlist = 2;
-      public java.util.List<com.google.protobuf.ByteString> getVlistList() {
-        return java.util.Collections.unmodifiableList(result.vlist_);
+      // required string value = 2;
+      public boolean hasValue() {
+        return result.hasValue();
       }
-      public int getVlistCount() {
-        return result.getVlistCount();
+      public java.lang.String getValue() {
+        return result.getValue();
       }
-      public com.google.protobuf.ByteString getVlist(int index) {
-        return result.getVlist(index);
-      }
-      public Builder setVlist(int index, com.google.protobuf.ByteString value) {
+      public Builder setValue(java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.vlist_.set(index, value);
+  result.hasValue = true;
+        result.value_ = value;
         return this;
       }
-      public Builder addVlist(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  if (result.vlist_.isEmpty()) {
-          result.vlist_ = new java.util.ArrayList<com.google.protobuf.ByteString>();
-        }
-        result.vlist_.add(value);
-        return this;
-      }
-      public Builder addAllVlist(
-          java.lang.Iterable<? extends com.google.protobuf.ByteString> values) {
-        if (result.vlist_.isEmpty()) {
-          result.vlist_ = new java.util.ArrayList<com.google.protobuf.ByteString>();
-        }
-        super.addAll(values, result.vlist_);
-        return this;
-      }
-      public Builder clearVlist() {
-        result.vlist_ = java.util.Collections.emptyList();
+      public Builder clearValue() {
+        result.hasValue = false;
+        result.value_ = getDefaultInstance().getValue();
         return this;
       }
       
-      // @@protoc_insertion_point(builder_scope:cn.ict.cacuts.mapreduce.KVList)
+      // @@protoc_insertion_point(builder_scope:cn.ict.cacuts.mapreduce.KVPair)
     }
     
     static {
-      defaultInstance = new KVList(true);
+      defaultInstance = new KVPair(true);
       com.klose.hash.mapreduce.KeyValue.internalForceInit();
       defaultInstance.initFields();
     }
     
-    // @@protoc_insertion_point(class_scope:cn.ict.cacuts.mapreduce.KVList)
+    // @@protoc_insertion_point(class_scope:cn.ict.cacuts.mapreduce.KVPair)
   }
   
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_cn_ict_cacuts_mapreduce_KVList_descriptor;
+    internal_static_cn_ict_cacuts_mapreduce_KVPair_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_cn_ict_cacuts_mapreduce_KVList_fieldAccessorTable;
+      internal_static_cn_ict_cacuts_mapreduce_KVPair_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -389,7 +354,7 @@ public final class KeyValue {
   static {
     java.lang.String[] descriptorData = {
       "\n\010kv.proto\022\027cn.ict.cacuts.mapreduce\"$\n\006K" +
-      "VList\022\013\n\003key\030\001 \002(\t\022\r\n\005vlist\030\002 \003(\014B$\n\030com" +
+      "VPair\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \002(\tB$\n\030com" +
       ".klose.hash.mapreduceB\010KeyValue"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
@@ -397,14 +362,14 @@ public final class KeyValue {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
             com.google.protobuf.Descriptors.FileDescriptor root) {
           descriptor = root;
-          internal_static_cn_ict_cacuts_mapreduce_KVList_descriptor =
+          internal_static_cn_ict_cacuts_mapreduce_KVPair_descriptor =
             getDescriptor().getMessageTypes().get(0);
-          internal_static_cn_ict_cacuts_mapreduce_KVList_fieldAccessorTable = new
+          internal_static_cn_ict_cacuts_mapreduce_KVPair_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_cn_ict_cacuts_mapreduce_KVList_descriptor,
-              new java.lang.String[] { "Key", "Vlist", },
-              com.klose.hash.mapreduce.KeyValue.KVList.class,
-              com.klose.hash.mapreduce.KeyValue.KVList.Builder.class);
+              internal_static_cn_ict_cacuts_mapreduce_KVPair_descriptor,
+              new java.lang.String[] { "Key", "Value", },
+              com.klose.hash.mapreduce.KeyValue.KVPair.class,
+              com.klose.hash.mapreduce.KeyValue.KVPair.Builder.class);
           return null;
         }
       };

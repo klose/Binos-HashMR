@@ -4,7 +4,7 @@ option java_package = "com.klose.hash.mapreduce";
 option java_outer_classname = "KeyValue";
 
 //<Key:String, Value:Int>
-message KVList {
+message KVPair {
 	required string key = 1;
-	repeated bytes vlist = 2;
+	required string value = 2;
 }

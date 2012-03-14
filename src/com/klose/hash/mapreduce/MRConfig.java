@@ -12,6 +12,8 @@ import org.apache.hadoop.fs.Path;
 
 
 
+
+
 /**
  * configure the arguments of map reduce.
  * @author jiangbing
@@ -164,11 +166,11 @@ public class  MRConfig {
 	 */
 	public Map<String, String> parseMRConfig() {
 		Map<String, String> configMap = new HashMap<String, String>();
-		configMap.put("mapper.class", getMapClass().getName());
-		configMap.put("reducer.class", getReduceClass().getName());
-		configMap.put("map.task.num", String.valueOf(this.mapTaskNum));
-		configMap.put("reduce.task.num", String.valueOf(this.getReduceTaskNum()));	
-		configMap.put("mapper.file.spilt.size", String.valueOf(this.getSplitFileSize()));
+		configMap.put(MRConfigDefine.MAPPER_CLASS, getMapClass().getName());
+		configMap.put(MRConfigDefine.REDUCER_CLASS, getReduceClass().getName());
+		configMap.put(MRConfigDefine.MAPPER_NUM, String.valueOf(this.mapTaskNum));
+		configMap.put(MRConfigDefine.REDUCER_NUM, String.valueOf(this.getReduceTaskNum()));	
+		configMap.put(MRConfigDefine.MAPPER_FILE_SPLIT_SIZE, String.valueOf(this.getSplitFileSize()));
 		return configMap;
 	}
 }

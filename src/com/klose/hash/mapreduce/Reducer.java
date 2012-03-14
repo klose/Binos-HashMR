@@ -45,6 +45,7 @@ public abstract class Reducer <KEYIN, VALUEIN, KEYOUT, VALUEOUT> {
 	 */
 	protected void cleanup(ReduceContext context) throws IOException,
 			InterruptedException {
+		System.out.println(" reducer getKey used total " + context.timeUsed + "ms");
 		// NOTHING
 	}
 }

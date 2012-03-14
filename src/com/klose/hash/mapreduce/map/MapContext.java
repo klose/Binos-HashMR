@@ -34,6 +34,8 @@ import com.transformer.compiler.JobConfiguration;
 public class MapContext<KEY, VALUE> {
 
 	private final static Log LOG = LogFactory.getLog(MapContext.class);
+	
+	public static long timeUsed = 0;
 	private final String inputPath;
 	private final String jobId;
 	private final int reducerNum;
@@ -64,20 +66,28 @@ public class MapContext<KEY, VALUE> {
 	public String getNextLine() {
 		return lineReader.getCurrentValue().toString();
 	}
+//	public void output(String key, Object value) {
+//		long start = System.currentTimeMillis(); 
+//		ByteArrayOutputStream baos;
+//		ObjectOutputStream oos;
+//		try {
+//			baos = new ByteArrayOutputStream();
+//			oos = new ObjectOutputStream(baos);
+//			oos.writeObject(value);
+//			this.taskOutput.putkeyByte(String.valueOf(hashPar.getPartition(key, reducerNum)), key, Arrays.asList(baos.toByteArray()));
+//			baos.close();
+//			oos.close();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		timeUsed += System.currentTimeMillis() - start; 
+//	}
+	
 	public void output(String key, Object value) {
-		 
-		ByteArrayOutputStream baos;
-		ObjectOutputStream oos;
-		try {
-			baos = new ByteArrayOutputStream();
-			oos = new ObjectOutputStream(baos);
-			oos.writeObject(value);
-			this.taskOutput.putkeyByte(String.valueOf(hashPar.getPartition(key, reducerNum)), key, Arrays.asList(baos.toByteArray()));
-			baos.close();
-			oos.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+		long start = System.currentTimeMillis(); 	
+		//System.out.println(key + " " + value.toString());
+		this.taskOutput.putkeyByte(String.valueOf(hashPar.getPartition(key, reducerNum)), key, Arrays.asList(value.toString().getBytes()));
+		timeUsed += System.currentTimeMillis() - start; 
 	}
 }

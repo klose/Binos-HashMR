@@ -30,6 +30,7 @@ public abstract class Mapper<KEY, VALUE> {
 	   */
 	  public void run(MapContext<KEY,VALUE> context) throws IOException, InterruptedException {
 	    setup(context);
+	    
 	    while (context.hasNextLine()) {
 	      map(context.getNextLine(), context);
 	    }
@@ -42,6 +43,7 @@ public abstract class Mapper<KEY, VALUE> {
 	  protected void cleanup(MapContext<KEY,VALUE> context
 	                         ) throws IOException, InterruptedException {
 	    // NOTHING
+		  System.out.println("output used total " + context.timeUsed + "ms");
 	  }
 	  
 	

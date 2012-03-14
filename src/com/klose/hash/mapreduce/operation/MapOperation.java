@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.fs.Path;
 
+import com.klose.hash.mapreduce.MRConfigDefine;
 import com.klose.hash.mapreduce.Mapper;
 import com.klose.hash.mapreduce.map.MapContext;
 import com.transformer.compiler.JobProperties;
@@ -18,7 +19,7 @@ public class MapOperation implements Operation{
 	@Override
 	public void operate(JobProperties properties, String[] inputPath, String[] outputPath) {
 		// TODO Auto-generated method stub
-		int reducerNum = Integer.parseInt(properties.getProperty("reduce.task.num"));
+		int reducerNum = Integer.parseInt(properties.getProperty(MRConfigDefine.REDUCER_NUM));
 		LOG.debug("mapper needs partition to " + reducerNum + "  partitions.");
 		String taskId = properties.getProperty("taskID");
 		String jobId = taskId.substring(0, taskId.lastIndexOf("-"));

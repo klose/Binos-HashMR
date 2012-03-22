@@ -1,7 +1,11 @@
 package com.klose.hash.mapreduce.test;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
+
+
 
 import com.klose.hash.mapreduce.MRConfig;
 import com.klose.hash.mapreduce.MRJob;
@@ -9,6 +13,7 @@ import com.klose.hash.mapreduce.Mapper;
 import com.klose.hash.mapreduce.Reducer;
 import com.klose.hash.mapreduce.map.MapContext;
 import com.klose.hash.mapredue.reduce.ReduceContext;
+import com.longyi.databus.daemon.Combiner;
 
 
 
@@ -27,6 +32,22 @@ public class WordCountTest {
 		}
 	}
 
+	public static class IntSumCombiner extends Combiner<Integer> {
+
+		@Override
+		public List<Integer> combine(String key, List<Integer> values) {
+			// TODO Auto-generated method stub
+			int sum = 0;
+			List<Integer> list = new ArrayList<Integer>();
+			Iterator<Integer> iter = values.iterator();
+			while (iter.hasNext()) {
+				sum += iter.next().intValue();
+			}
+			list.add(sum);
+			return list;
+		}
+
+	}
 	public static class IntSumReducer extends
 			Reducer<String, Integer, String, Integer> {
 		@Override
@@ -54,6 +75,7 @@ public class WordCountTest {
 		job.setOutputFileName(outputFileName);
 		job.setMapperClass(TokenizerMapper.class);
 		job.setReducerClass(IntSumReducer.class);
+		job.setCombinerClass(IntSumCombiner.class);
 		job.setNumReduceTasks(4);
 		job.submit();
 	}

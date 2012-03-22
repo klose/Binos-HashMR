@@ -43,10 +43,12 @@ public class MapContext<KEY, VALUE> {
 	private HdfsFileLineReader lineReader = new HdfsFileLineReader();
 	private final TaskOutput taskOutput ;
 	private final static HashPartitioner<String, Object> hashPar  = new HashPartitioner<String, Object>(); 
-	public MapContext(String inputPath, String jobId, int reducerNum) {
+	private final String combineClassName;
+	public MapContext(String inputPath, String jobId, int reducerNum, String combineClassName) {
 		this.inputPath = inputPath;
 		this.jobId = jobId;
 		this.reducerNum = reducerNum;
+		this.combineClassName = combineClassName;
 		InputStream ins;
 		try {
 			ins = BinosDataClient.getInputStream(new BinosURL(new Text(inputPath)));
@@ -56,7 +58,7 @@ public class MapContext<KEY, VALUE> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		taskOutput = new TaskOutput(jobId, DATABUS.JOB_VALUE_BYTE);
+		taskOutput = new TaskOutput(jobId, DATABUS.JOB_VALUE_OBJECT, this.combineClassName);
 		
 	}
 	public boolean hasNextLine() throws IOException {

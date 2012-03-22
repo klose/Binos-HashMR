@@ -10,7 +10,7 @@ import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 
-
+import com.longyi.databus.daemon.Combiner;
 
 
 
@@ -33,6 +33,8 @@ public class  MRConfig {
 	private  Class mapContextValueClass = Integer.class;
 	private   Class<? extends Mapper> mapClass;
 	private   Class<? extends Reducer> reduceClass;
+	private   Class <? extends Combiner> combineClass ;
+
 	private   Path workingDirectory;
 	private String tempMapOutFilesPathPrefix;
 	private  String[] inputFileName;
@@ -141,12 +143,19 @@ public class  MRConfig {
 	public  void setReduceClass(Class<? extends Reducer> reduceClass) {
 		this.reduceClass = reduceClass;
 	}
+	public  Class<? extends Combiner> getCombineClass() {
+		return this.combineClass;
+	}
+	public  void setCombineClass(Class<? extends Combiner> combineClass) {
+		this.combineClass = combineClass;
+	}
 	public  Path getWorkingDirectory() {
 		return workingDirectory;
 	}
 	public  void setWorkingDirectory(Path workingDirectory) {
 		this.workingDirectory = workingDirectory;
 	}
+	
 	public  String[] getInputFileName() {
 		return inputFileName;
 	}
@@ -168,9 +177,11 @@ public class  MRConfig {
 		Map<String, String> configMap = new HashMap<String, String>();
 		configMap.put(MRConfigDefine.MAPPER_CLASS, getMapClass().getName());
 		configMap.put(MRConfigDefine.REDUCER_CLASS, getReduceClass().getName());
+		configMap.put(MRConfigDefine.COMBINER_CLASS, getCombineClass().getName());
 		configMap.put(MRConfigDefine.MAPPER_NUM, String.valueOf(this.mapTaskNum));
 		configMap.put(MRConfigDefine.REDUCER_NUM, String.valueOf(this.getReduceTaskNum()));	
 		configMap.put(MRConfigDefine.MAPPER_FILE_SPLIT_SIZE, String.valueOf(this.getSplitFileSize()));
 		return configMap;
 	}
+	
 }

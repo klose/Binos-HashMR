@@ -2,6 +2,9 @@ package com.klose.hash.mapreduce;
 
 import org.apache.hadoop.fs.Path;
 
+import com.longyi.databus.daemon.Combiner;
+
+
 
 
 public class MRJob extends MRJobContext {
@@ -63,19 +66,7 @@ public class MRJob extends MRJobContext {
 		conf.setMapClass(cls);
 	}
 
-	/**
-	 * Set the combiner class for the job.
-	 * 
-	 * @param cls
-	 *            the combiner to use
-	 * @throws IllegalStateException
-	 *             if the job is submitted
-	 */
-	public void setCombinerClass(Class<? extends Reducer> cls)
-			throws IllegalStateException {
-		ensureState(JobState.DEFINE);
-		conf.setReduceClass(cls);
-	}
+	
 
 	/**
 	 * Set the {@link Reducer} for the job.
@@ -89,13 +80,18 @@ public class MRJob extends MRJobContext {
 			throws IllegalStateException {
 		ensureState(JobState.DEFINE);
 		conf.setReduceClass(cls);
-		;
 	}
-
+	public void setCombinerClass(Class<? extends Combiner> cls) 
+			throws IllegalStateException{
+		ensureState(JobState.DEFINE);
+		conf.setCombineClass(cls);
+	}
+	
 	public void setJobName(String name) throws IllegalStateException {
 		ensureState(JobState.DEFINE);
 		conf.setJobName(name);
 	}
+	
 
 	// ///////////////////////////////////////////////////////////////////////////
 	// public String getTrackingURL() {

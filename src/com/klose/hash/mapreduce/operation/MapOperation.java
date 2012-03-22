@@ -25,7 +25,7 @@ public class MapOperation implements Operation{
 		String jobId = taskId.substring(0, taskId.lastIndexOf("-"));
 		MapContext context;
 		try {
-			context = new MapContext(inputPath[0], jobId, reducerNum);
+			context = new MapContext(inputPath[0], jobId, reducerNum, properties.getProperty(MRConfigDefine.COMBINER_CLASS));
 			Class<? extends Mapper>  mapClass = (Class<? extends Mapper>) Class.forName(properties.getProperty("mapper.class"));
 			Constructor<Mapper> meth = (Constructor<Mapper>) mapClass.getConstructor(new Class[0]);
 			meth.setAccessible(true);
